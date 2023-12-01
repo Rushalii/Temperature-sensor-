@@ -1,0 +1,39 @@
+const int lm35_pin = A0;  /* LM35 O/P pin */
+int led1=13;
+void D(unsigned int v){
+  int i;
+  for(i=0;i<=v;i++);
+}
+
+
+void setup() {
+  pinMode(led1, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  
+  int temp_adc_val;
+  float temp_val;
+  temp_adc_val = analogRead(lm35_pin);  /* Read Temperature */
+  temp_val = (temp_adc_val * 4.88); /* Convert adc value to equivalent voltage */
+  temp_val = (temp_val/10); /* LM35 gives output of 10mv/°C */
+  Serial.print("Temperature = ");
+  Serial.print(temp_val);
+  Serial.print(" Degree Celsius\n");
+  delay(1000);
+  if (temp_val > 30 )
+  {
+  digitalWrite(led1, HIGH);   // turn the LED on (HIGH is the voltage level)    
+                      
+  digitalWrite(led1, LOW);    // turn the LED off by making the voltage LOW  
+  D(255);// wait for a 255 millisecond
+  }
+  else
+  {
+  digitalWrite(led1,HIGH);
+     
+  digitalWrite(led1,LOW);
+    D(500);// wait for a 500 millisecond
+  } 
+}
